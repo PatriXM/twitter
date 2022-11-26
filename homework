@@ -1,0 +1,164 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'tweet.dart';
+
+void main() {
+  runApp(const Myapp());
+}
+
+class Myapp extends StatelessWidget {
+  const Myapp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Twitter",
+      theme: ThemeData(
+        primaryColor: Colors.blueGrey,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const Twitter(),
+    );
+  }
+}
+
+class Twitter extends StatefulWidget {
+  const Twitter({super.key});
+
+  @override
+  State<Twitter> createState() => _TwitterState();
+}
+
+class _TwitterState extends State<Twitter> {
+  var tweetList = [
+    Tweet(
+      avatar_url:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEoXMBx9nDjloymET6oqxZtwntOyFMp6c5ov8szU8gLmx5_8xskq5ZWDer45sl1_ZtLRg&usqp=CAU',
+      postText: '',
+    ),
+    Tweet(
+      avatar_url: 'https://pbs.twimg.com/media/EhuC7rpUcAAszcD.jpg:large',
+      postText: 'My name is Patrick Levy',
+    ),
+    Tweet(
+      avatar_url:
+          'https://media.tenor.com/zh9hg7DwnIgAAAAC/gintoki-sakata-gintama.gif',
+      postText: 'I am studying Engineer in Bangkok University',
+    ),
+    Tweet(
+      avatar_url:
+          'https://media.tenor.com/CZT2fuNfH0QAAAAC/gintama-punching.gif',
+      postText: 'I have made some good friends here',
+    ),
+    Tweet(
+        avatar_url:
+            'https://64.media.tumblr.com/cdcb860d10c92fe4cbba45ed8a81d910/d747cbfff5ae7b1e-4f/s1280x1920/fb945e21096d4963957bd7cfccb2c68056f72935.png',
+        postText: 'My friends and I like to eat buffet'),
+    Tweet(
+        avatar_url:
+            'https://coub-attachments.akamaized.net/coub_storage/media_block/cw_image/827756ea86a/aaabb87eb89bc6d67d0dd/1538782150_17302dc_1538782082_ej5xsp_att-url-download.jpg',
+        postText: 'They are very kind to me'),
+    Tweet(
+        avatar_url: 'https://pbs.twimg.com/media/FWhrLhFWAAA2ruG.png',
+        postText: 'I like watching anime'),
+    Tweet(
+        avatar_url: 'https://i.imgur.com/ZVUOcmz.jpg',
+        postText:
+            'I used to put mayonaise on everything because I watched too much Gintama'),
+    Tweet(
+        avatar_url: 'https://media.tenor.com/2T1vdDRVNK8AAAAC/gintama-gin.gif',
+        postText:
+            'Gintama is a comedic anime but it can be very emotional and intense too'),
+    Tweet(
+        avatar_url: 'https://pbs.twimg.com/media/D-obN5GUcAEvF0B.jpg',
+        postText: 'Very recommended')
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Container(
+          margin: const EdgeInsets.all(10.0),
+          child: const CircleAvatar(
+            backgroundImage: NetworkImage(
+                'http://images6.fanpop.com/image/answers/3023000/3023083_1348801290445.11res_480_480.jpg'),
+          ),
+        ),
+        backgroundColor: Colors.blueGrey,
+        centerTitle: true,
+        title: const Text(
+          "Twitter",
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildIconButton(
+              Icons.home,
+              Colors.black,
+            ),
+            buildIconButton(
+              Icons.safety_check_outlined,
+              Colors.grey,
+            ),
+            buildIconButton(
+              Icons.notifications_outlined,
+              Colors.grey,
+            ),
+            buildIconButton(
+              Icons.email_outlined,
+              Colors.grey,
+            ),
+          ],
+        ),
+      ),
+      body: listOfTweets(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(FontAwesomeIcons.pen),
+        onPressed: () {
+          setState(() {
+            //tweetList.add(Tweet());
+            tweetList.insert(
+                0,
+                Tweet(
+                  avatar_url:
+                      'http://images6.fanpop.com/image/photos/35100000/GINTAMA-anime-35115362-1280-720.jpg',
+                  postText: 'Ba Bye.',
+                ));
+          });
+        },
+      ),
+    );
+  }
+
+  Widget listOfTweets() {
+    return Container(
+        color: Colors.black12,
+        child: ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              return tweetList[index];
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(
+                  height: 10,
+                ),
+            itemCount: tweetList.length));
+  }
+
+  Widget buildIconButton(IconData icon, Color color) {
+    return IconButton(
+        icon: Icon(
+          icon,
+          color: color,
+        ),
+        onPressed: () {});
+  }
+}
